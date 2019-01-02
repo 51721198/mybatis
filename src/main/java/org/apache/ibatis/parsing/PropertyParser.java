@@ -48,7 +48,7 @@ public class PropertyParser {
       if (variables != null && variables.containsKey(content)) {
         return variables.getProperty(content);
       }
-      return "${" + content + "}";
+      return "${" + content + "}";   //原来的${jdbc.username} 将会变成${zhangsan}
     }
   }
 }
