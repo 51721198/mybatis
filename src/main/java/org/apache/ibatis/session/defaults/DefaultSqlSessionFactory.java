@@ -97,7 +97,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
   private SqlSession openSessionFromDataSource(ExecutorType execType, TransactionIsolationLevel level, boolean autoCommit) {
     Transaction tx = null;
     try {
-      final Environment environment = configuration.getEnvironment();
+      final Environment environment = configuration.getEnvironment();  //开发环境or生产环境
       final TransactionFactory transactionFactory = getTransactionFactoryFromEnvironment(environment);
       //通过事务工厂来产生一个事务
       tx = transactionFactory.newTransaction(environment.getDataSource(), level, autoCommit);

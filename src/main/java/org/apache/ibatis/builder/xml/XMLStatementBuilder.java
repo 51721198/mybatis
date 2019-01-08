@@ -15,9 +15,6 @@
  */
 package org.apache.ibatis.builder.xml;
 
-import java.util.List;
-import java.util.Locale;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
@@ -32,6 +29,9 @@ import org.apache.ibatis.mapping.StatementType;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Clinton Begin
@@ -58,18 +58,8 @@ public class XMLStatementBuilder extends BaseBuilder {
   }
 
   //解析语句(select|insert|update|delete)
-//<select
-//  id="selectPerson"
-//  parameterType="int"
-//  parameterMap="deprecated"
-//  resultType="hashmap"
-//  resultMap="personResultMap"
-//  flushCache="false"
-//  useCache="true"
-//  timeout="10000"
-//  fetchSize="256"
-//  statementType="PREPARED"
-//  resultSetType="FORWARD_ONLY">
+//<select id="selectPerson"  parameterType="int" parameterMap="deprecated" resultType="hashmap" resultMap="personResultMap"
+// flushCache="false" useCache="true" timeout="10000" fetchSize="256" statementType="PREPARED" resultSetType="FORWARD_ONLY">
 //  SELECT * FROM PERSON WHERE ID = #{id}
 //</select>
   public void parseStatementNode() {
@@ -107,9 +97,9 @@ public class XMLStatementBuilder extends BaseBuilder {
     ResultSetType resultSetTypeEnum = resolveResultSetType(resultSetType);
 
     //获取命令类型(select|insert|update|delete)
-    String nodeName = context.getNode().getNodeName();
-    SqlCommandType sqlCommandType = SqlCommandType.valueOf(nodeName.toUpperCase(Locale.ENGLISH));
-    boolean isSelect = sqlCommandType == SqlCommandType.SELECT;
+    String nodeName = context.getNode().getNodeName(); //select|insert|update|delete
+    SqlCommandType sqlCommandType = SqlCommandType.valueOf(nodeName.toUpperCase(Locale.ENGLISH)); //哦,这里转成了大写
+    boolean isSelect = sqlCommandType == SqlCommandType.SELECT; //select需要特殊处理?
     boolean flushCache = context.getBooleanAttribute("flushCache", !isSelect);
     //是否要缓存select结果
     boolean useCache = context.getBooleanAttribute("useCache", isSelect);

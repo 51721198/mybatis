@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.builder.xml;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.datasource.DataSourceFactory;
@@ -41,6 +35,11 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.LocalCacheScope;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.JdbcType;
+
+import javax.sql.DataSource;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.Properties;
 
 /**
  * @author Clinton Begin
@@ -147,7 +146,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       //6.设置
       settingsElement(root.evalNode("settings"));
       // read it after objectFactory and objectWrapperFactory issue #631
-      //7.环境
+      //7.环境:线上环境or开发环境
       environmentsElement(root.evalNode("environments"));
       //8.databaseIdProvider
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
